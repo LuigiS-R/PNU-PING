@@ -20,4 +20,12 @@ describe('searchNotices', () => {
 describe('sort', () => {
   it('최신순', () => { expect(sortByDateDesc(data).map(n => n.id)).toEqual(['a', 'b', 'c']) })
   it('중요 우선 후 최신순', () => { expect(importantFirst(data).map(n => n.id)).toEqual(['a', 'b', 'c']) })
+  it('중요 공지끼리는 날짜 내림차순', () => {
+    const items: Notice[] = [
+      N({ id: 'normal', isImportant: false, publishedAt: '2026-06-08T10:00:00+09:00' }),
+      N({ id: 'imp-old', isImportant: true, publishedAt: '2026-06-07T10:00:00+09:00' }),
+      N({ id: 'imp-new', isImportant: true, publishedAt: '2026-06-08T10:00:00+09:00' }),
+    ]
+    expect(importantFirst(items).map(n => n.id)).toEqual(['imp-new', 'imp-old', 'normal'])
+  })
 })
