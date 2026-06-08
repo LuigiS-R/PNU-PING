@@ -1,0 +1,35 @@
+'use client'
+import React, { useState } from 'react'
+import { useRouter } from 'next/navigation'
+import { Toggle } from '@/components/ui/Toggle'
+import { AddDeptModal } from '@/components/dept/AddDeptModal'
+import { usePingStore } from '@/lib/store'
+import { MAX_SUBSCRIPTIONS } from '@/lib/types'
+
+export default function Settings() {
+  const router = useRouter()
+  const s = usePingStore()
+  const [addOpen, setAddOpen] = useState(false)
+  const Row = ({ icon, label, right }: { icon: string; label: string; right: React.ReactNode }) => (
+    <div className="flex items-center gap-3 bg-white border-b border-line px-4 py-4 font-semibold text-[14.5px]">
+      <span className="w-8 h-8 rounded-lg bg-tint text-primary flex items-center justify-center shrink-0">{icon}</span>
+      {label}<span className="ml-auto flex items-center">{right}</span>
+    </div>
+  )
+  return (
+    <div className="max-w-md mx-auto">
+      <h1 className="text-[21px] font-extrabold text-ink mb-2">설정</h1>
+      <div className="rounded-[var(--radius-pg-lg)] overflow-hidden border border-line">
+        <Row icon="👤" label={s.email ?? '로그인 필요'} right={s.loggedIn
+          ? <button onClick={() => { s.logout(); router.push('/login') }} className="text-xs text-muted">로그아웃</button>
+          : <button onClick={() => router.push('/login')} className="text-xs text-primary">로그인</button>} />
+        <Row icon="🎓" label="구독 학과 관리" right={<button onClick={() => setAddOpen(true)} className="text-xs text-muted">{s.subscribedDeptIds.length} / {MAX_SUBSCRIPTIONS}</button>} />
+        <Row icon="🔔" label="새 공지 알림" right={<Toggle on={s.settings.newNotice} onClick={() => s.toggleSetting('newNotice')} />} />
+        <Row icon="🌙" label="중요 공지만 알림" right={<Toggle on={s.settings.importantOnly} onClick={() => s.toggleSetting('importantOnly')} />} />
+        <Row icon="💬" label="PING 한마디 받기" right={<Toggle on={s.settings.pingVoice} onClick={() => s.toggleSetting('pingVoice')} />} />
+        <Row icon="ⓘ" label="버전 정보" right={<span className="text-xs text-muted">1.0.0</span>} />
+      </div>
+      <AddDeptModal open={addOpen} onClose={() => setAddOpen(false)} />
+    </div>
+  )
+}
