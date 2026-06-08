@@ -19,7 +19,7 @@ export default function NoticeDetail({ params }: { params: Promise<{ id: string 
   return (
     <div className="flex flex-col gap-3 max-w-[640px]">
       <button onClick={() => router.back()} className="self-start text-muted text-sm">← 뒤로</button>
-      <DeptTag>{deptName(notice.deptId)}</DeptTag>
+      <div className="self-start"><DeptTag>{deptName(notice.deptId)}</DeptTag></div>
       <h1 className="text-xl font-extrabold text-ink leading-snug">{notice.title}</h1>
       <div className="text-xs text-muted">{notice.publishedAt.slice(0, 10)} · 조회 {notice.views.toLocaleString()}</div>
       <div className="flex justify-center py-2"><Ping expression="reading" size={72} /></div>

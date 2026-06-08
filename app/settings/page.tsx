@@ -1,21 +1,25 @@
 'use client'
-import React, { useState } from 'react'
+import { useState } from 'react'
+import type { ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { Toggle } from '@/components/ui/Toggle'
 import { AddDeptModal } from '@/components/dept/AddDeptModal'
 import { usePingStore } from '@/lib/store'
 import { MAX_SUBSCRIPTIONS } from '@/lib/types'
 
+function Row({ icon, label, right }: { icon: string; label: string; right: ReactNode }) {
+  return (
+    <div className="flex items-center gap-3 bg-white border-b border-line px-4 py-4 font-semibold text-[14.5px]">
+      <span aria-hidden="true" className="w-8 h-8 rounded-lg bg-tint text-primary flex items-center justify-center shrink-0">{icon}</span>
+      {label}<span className="ml-auto flex items-center">{right}</span>
+    </div>
+  )
+}
+
 export default function Settings() {
   const router = useRouter()
   const s = usePingStore()
   const [addOpen, setAddOpen] = useState(false)
-  const Row = ({ icon, label, right }: { icon: string; label: string; right: React.ReactNode }) => (
-    <div className="flex items-center gap-3 bg-white border-b border-line px-4 py-4 font-semibold text-[14.5px]">
-      <span className="w-8 h-8 rounded-lg bg-tint text-primary flex items-center justify-center shrink-0">{icon}</span>
-      {label}<span className="ml-auto flex items-center">{right}</span>
-    </div>
-  )
   return (
     <div className="max-w-md mx-auto">
       <h1 className="text-[21px] font-extrabold text-ink mb-2">설정</h1>
