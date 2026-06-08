@@ -18,19 +18,24 @@ function Row({ icon, label, right }: { icon: string; label: string; right: React
 
 export default function Settings() {
   const router = useRouter()
-  const s = usePingStore()
+  const email = usePingStore(st => st.email)
+  const loggedIn = usePingStore(st => st.loggedIn)
+  const subscribedDeptIds = usePingStore(st => st.subscribedDeptIds)
+  const settings = usePingStore(st => st.settings)
+  const logout = usePingStore(st => st.logout)
+  const toggleSetting = usePingStore(st => st.toggleSetting)
   const [addOpen, setAddOpen] = useState(false)
   return (
     <div className="max-w-md mx-auto">
       <h1 className="text-[21px] font-extrabold text-ink mb-2">설정</h1>
       <div className="rounded-[var(--radius-pg-lg)] overflow-hidden border border-line">
-        <Row icon="👤" label={s.email ?? '로그인 필요'} right={s.loggedIn
-          ? <button onClick={() => { s.logout(); router.push('/login') }} className="text-xs text-muted">로그아웃</button>
+        <Row icon="👤" label={email ?? '로그인 필요'} right={loggedIn
+          ? <button onClick={() => { logout(); router.push('/login') }} className="text-xs text-muted">로그아웃</button>
           : <button onClick={() => router.push('/login')} className="text-xs text-primary">로그인</button>} />
-        <Row icon="🎓" label="구독 학과 관리" right={<button onClick={() => setAddOpen(true)} className="text-xs text-muted">{s.subscribedDeptIds.length} / {MAX_SUBSCRIPTIONS}</button>} />
-        <Row icon="🔔" label="새 공지 알림" right={<Toggle on={s.settings.newNotice} onClick={() => s.toggleSetting('newNotice')} />} />
-        <Row icon="🌙" label="중요 공지만 알림" right={<Toggle on={s.settings.importantOnly} onClick={() => s.toggleSetting('importantOnly')} />} />
-        <Row icon="💬" label="PING 한마디 받기" right={<Toggle on={s.settings.pingVoice} onClick={() => s.toggleSetting('pingVoice')} />} />
+        <Row icon="🎓" label="구독 학과 관리" right={<button onClick={() => setAddOpen(true)} className="text-xs text-muted">{subscribedDeptIds.length} / {MAX_SUBSCRIPTIONS}</button>} />
+        <Row icon="🔔" label="새 공지 알림" right={<Toggle on={settings.newNotice} onClick={() => toggleSetting('newNotice')} />} />
+        <Row icon="🌙" label="중요 공지만 알림" right={<Toggle on={settings.importantOnly} onClick={() => toggleSetting('importantOnly')} />} />
+        <Row icon="💬" label="PING 한마디 받기" right={<Toggle on={settings.pingVoice} onClick={() => toggleSetting('pingVoice')} />} />
         <Row icon="ⓘ" label="버전 정보" right={<span className="text-xs text-muted">1.0.0</span>} />
       </div>
       <AddDeptModal open={addOpen} onClose={() => setAddOpen(false)} />

@@ -10,7 +10,7 @@ import { NoticeCategory } from '@/lib/types'
 import { usePingStore } from '@/lib/store'
 import { NOW } from '@/lib/now'
 
-const CATS: (NoticeCategory | '전체')[] = ['전체', '장학', '학사', '행사', '취업']
+const CATS: (NoticeCategory | '전체')[] = ['전체', '장학', '학사', '행사', '취업', '일반']
 
 export function FeedView() {
   const sp = useSearchParams()
