@@ -8,7 +8,7 @@ import { Ping } from '@/components/ping/Ping'
 
 export default function Onboarding() {
   const router = useRouter()
-  const subs = usePingStore(s => s.subscribedDeptIds)
+  const subs = usePingStore(s => s.subscribedDepts)
   const subscribe = usePingStore(s => s.subscribe)
   const unsubscribe = usePingStore(s => s.unsubscribe)
   return (
@@ -25,9 +25,9 @@ export default function Onboarding() {
         <div key={c.id} className="mt-2">
           <div className="text-xs font-bold text-muted mb-1">{c.name}</div>
           {deptsOfCollege(c.id).map(d => {
-            const on = subs.includes(d.id)
+            const on = subs.includes(d.name)
             return (
-              <button key={d.id} onClick={() => on ? unsubscribe(d.id) : subscribe(d.id)}
+              <button key={d.id} onClick={() => on ? unsubscribe(d.name) : subscribe(d.name)}
                 className={`w-full flex items-center gap-3 border rounded-2xl px-4 py-3 mb-2 font-semibold text-sm ${on ? 'border-primary bg-tint' : 'border-line bg-white'}`}>
                 <span className={`w-[22px] h-[22px] rounded-md border-2 flex items-center justify-center ${on ? 'bg-primary border-primary text-white' : 'border-[#D7DEE9]'}`}>{on ? '✓' : ''}</span>
                 {d.name}

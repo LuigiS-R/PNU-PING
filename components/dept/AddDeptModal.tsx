@@ -3,7 +3,7 @@ import { colleges, deptsOfCollege } from '@/lib/mock-data'
 import { usePingStore } from '@/lib/store'
 import { MAX_SUBSCRIPTIONS } from '@/lib/types'
 export function AddDeptModal({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const subs = usePingStore(s => s.subscribedDeptIds)
+  const subs = usePingStore(s => s.subscribedDepts)
   const subscribe = usePingStore(s => s.subscribe)
   const unsubscribe = usePingStore(s => s.unsubscribe)
   if (!open) return null
@@ -19,8 +19,8 @@ export function AddDeptModal({ open, onClose }: { open: boolean; onClose: () => 
             <div className="text-xs font-bold text-muted mb-1">{c.name}</div>
             <div className="flex flex-wrap gap-2">
               {deptsOfCollege(c.id).map(d => {
-                const on = subs.includes(d.id)
-                return <button key={d.id} onClick={() => on ? unsubscribe(d.id) : subscribe(d.id)}
+                const on = subs.includes(d.name)
+                return <button key={d.id} onClick={() => on ? unsubscribe(d.name) : subscribe(d.name)}
                   className={`px-3 py-1.5 rounded-full text-sm font-semibold border-[1.5px] ${on ? 'bg-primary border-primary text-white' : 'bg-white border-line text-[#54607A]'}`}>{d.name}</button>
               })}
             </div>

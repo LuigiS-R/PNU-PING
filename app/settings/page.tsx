@@ -20,7 +20,7 @@ export default function Settings() {
   const router = useRouter()
   const email = usePingStore(st => st.email)
   const loggedIn = usePingStore(st => st.loggedIn)
-  const subscribedDeptIds = usePingStore(st => st.subscribedDeptIds)
+  const subscribedDepts = usePingStore(st => st.subscribedDepts)
   const settings = usePingStore(st => st.settings)
   const logout = usePingStore(st => st.logout)
   const toggleSetting = usePingStore(st => st.toggleSetting)
@@ -32,9 +32,8 @@ export default function Settings() {
         <Row icon="👤" label={email ?? '로그인 필요'} right={loggedIn
           ? <button onClick={() => { logout(); router.push('/login') }} className="text-xs text-muted">로그아웃</button>
           : <button onClick={() => router.push('/login')} className="text-xs text-primary">로그인</button>} />
-        <Row icon="🎓" label="구독 학과 관리" right={<button onClick={() => setAddOpen(true)} className="text-xs text-muted">{subscribedDeptIds.length} / {MAX_SUBSCRIPTIONS}</button>} />
+        <Row icon="🎓" label="구독 학과 관리" right={<button onClick={() => setAddOpen(true)} className="text-xs text-muted">{subscribedDepts.length} / {MAX_SUBSCRIPTIONS}</button>} />
         <Row icon="🔔" label="새 공지 알림" right={<Toggle on={settings.newNotice} onClick={() => toggleSetting('newNotice')} />} />
-        <Row icon="🌙" label="중요 공지만 알림" right={<Toggle on={settings.importantOnly} onClick={() => toggleSetting('importantOnly')} />} />
         <Row icon="💬" label="PING 한마디 받기" right={<Toggle on={settings.pingVoice} onClick={() => toggleSetting('pingVoice')} />} />
         <Row icon="ⓘ" label="버전 정보" right={<span className="text-xs text-muted">1.0.0</span>} />
       </div>

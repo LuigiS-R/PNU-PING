@@ -9,7 +9,7 @@ export default function Login() {
   const router = useRouter()
   const [email, setEmail] = useState('')
   const login = usePingStore(s => s.login)
-  const subs = usePingStore(s => s.subscribedDeptIds)
+  const subs = usePingStore(s => s.subscribedDepts)
   const valid = /^[^@\s]+@pusan\.ac\.kr$/.test(email)
   const submit = () => { if (!valid) return; login(email); router.push(subs.length ? '/' : '/onboarding') }
   return (

@@ -7,7 +7,7 @@ import { AddDeptModal } from '@/components/dept/AddDeptModal'
 
 export function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose: () => void }) {
   const loggedIn = usePingStore(s => s.loggedIn)
-  const subs = usePingStore(s => s.subscribedDeptIds)
+  const subs = usePingStore(s => s.subscribedDepts)
   const [open, setOpen] = useState<string | null>('eng')
   const [addOpen, setAddOpen] = useState(false)
   return (
@@ -27,7 +27,7 @@ export function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose:
             {open === c.id && (
               <div className="pl-2 flex flex-col">
                 {deptsOfCollege(c.id).map(d => (
-                  <Link key={d.id} href={`/feed?dept=${d.id}`} onClick={onClose}
+                  <Link key={d.id} href={`/?dept=${d.name}`} onClick={onClose}
                     className="px-3 py-1.5 rounded-lg text-[13px] hover:bg-tint text-[#54607A]">
                     {d.name}
                   </Link>
@@ -39,7 +39,7 @@ export function Sidebar({ mobileOpen, onClose }: { mobileOpen: boolean; onClose:
         {loggedIn && (
           <>
             <div className="h-px bg-line my-2" />
-            <Link href="/feed?my=1" onClick={onClose} className="px-2 py-2 rounded-xl hover:bg-tint text-sm font-bold text-ink">⭐ 나의 학과 <span className="text-muted font-medium">({subs.length})</span></Link>
+            <Link href="/?my=1" onClick={onClose} className="px-2 py-2 rounded-xl hover:bg-tint text-sm font-bold text-ink">⭐ 나의 학과 <span className="text-muted font-medium">({subs.length})</span></Link>
             <button onClick={() => setAddOpen(true)} className="text-left px-2 py-2 rounded-xl hover:bg-tint text-sm font-bold text-primary">＋ 학과 추가</button>
           </>
         )}

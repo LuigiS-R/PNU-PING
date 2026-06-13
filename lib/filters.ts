@@ -1,9 +1,8 @@
-import { Notice, NoticeCategory } from './types'
-export type FeedFilter = { deptIds?: string[]; category?: NoticeCategory }
+import { Notice } from './types'
+export type FeedFilter = { depts?: string[] }
 export function filterNotices(notices: Notice[], f: FeedFilter): Notice[] {
   return notices.filter(n => {
-    if (f.deptIds && f.deptIds.length > 0 && !f.deptIds.includes(n.deptId)) return false
-    if (f.category && n.category !== f.category) return false
+    if (f.depts && f.depts.length > 0 && !f.depts.includes(n.department)) return false
     return true
   })
 }
@@ -15,10 +14,4 @@ export function searchNotices(notices: Notice[], query: string): Notice[] {
 }
 export function sortByDateDesc(notices: Notice[]): Notice[] {
   return [...notices].sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
-}
-export function importantFirst(notices: Notice[]): Notice[] {
-  return [...notices].sort((a, b) => {
-    if (a.isImportant !== b.isImportant) return a.isImportant ? -1 : 1
-    return new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
-  })
 }
