@@ -1,7 +1,6 @@
 import { Notice } from './types'
 
-// TODO: replace with your actual backend host, e.g. "http://192.168.1.10:8080"
-const API_BASE_URL = 'http://157.230.195.14:80'
+const API_BASE_URL = '/api'
 
 export type BackendPost = {
   title: string
